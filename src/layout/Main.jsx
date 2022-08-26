@@ -18,7 +18,7 @@ class Main extends React.Component {
 
   searchMovies = (type, str) => {
     this.setState({ loading: true });
-    fetch(`http://www.omdbapi.com/?apikey=${API_KEY}&type=${type}&s=${str}`)
+    fetch(`https://www.omdbapi.com/?apikey=${API_KEY}&type=${type}&s=${str}`)
       .then((response) => response.json())
       .then((data) => {
         if (data.Search) {
@@ -26,7 +26,10 @@ class Main extends React.Component {
         } else {
           this.setState({ error: data.Error, loading: false });
         }
-      });
+      }).catch(err => {
+        console.error(err)
+        this.setState({ error: err, loading: false });
+    });
   };
 
   render() {
