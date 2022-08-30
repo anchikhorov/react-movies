@@ -1,46 +1,46 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import { Movies } from "../components/Movies";
 import { Preloader } from "../components/Preloader";
 import { Search } from "../components/Search";
 
 const API_KEY = process.env.REACT_APP_API_KEY
 
-class Main extends React.Component {
+function Main(){
+  const [state, setState] = useState(
+    {
+      movies: [],
+      loading: false,
+      error: '',
+    }
+  
+  )
 
-  state = {
-    movies: [],
-    loading: false,
-  };
-
-  componentDidMount() {
-    this.searchMovies("", "matrix");
-  }
-
-  searchMovies = (type, str) => {
-    this.setState({ loading: true });
+  const searchMovies = (type, str) => {
+    setState({...state, loading: true });
     fetch(`https://www.omdbapi.com/?apikey=${API_KEY}&type=${type}&s=${str}`)
       .then((response) => response.json())
       .then((data) => {
         if (data.Search) {
-          this.setState({ movies: data.Search, loading: false , error: ''});
+          setState({ ...state, movies: data.Search, loading: false , error: ''});
         } else {
-          this.setState({ error: data.Error, loading: false });
+          setState({ ...state, error: data.Error, loading: false });
         }
       }).catch(err => {
         console.error(err)
-        this.setState({ error: err, loading: false });
+        setState({...state, error: err, loading: false });
     });
   };
 
-  render() {
-    const { movies, loading, error } = this.state;
+    const { movies, loading, error } = state;
+    useEffect(() => {
+      searchMovies("", "matrix")
+    })
     return (
       <main className="container content">
-        <Search searchMovies={this.searchMovies} />
+        <Search searchMovies={searchMovies} />
         {loading ? <Preloader /> : (error ? error : <Movies movies={movies} />)}
       </main>
     );
-  }
 }
 
 export { Main };
