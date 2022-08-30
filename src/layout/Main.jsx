@@ -34,7 +34,7 @@ function Main(){
     const { movies, loading, error } = state;
     useEffect(() => {
       searchMovies("", "matrix")
-    })
+    },[])
     return (
       <main className="container content">
         <Search searchMovies={searchMovies} />
