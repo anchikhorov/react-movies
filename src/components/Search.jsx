@@ -54,8 +54,8 @@ function Search(props) {
                 onChange={handleFilter}
                 checked={type === "all"}
               />
-              <span>All</span>
-            </label>
+              <span >All</span>
+            </label> 
             <label className="item2">
               <input
                 className="with-gap"
@@ -65,7 +65,7 @@ function Search(props) {
                 onChange={handleFilter}
                 checked={type === "movie"}
               />
-              <span>Movies only</span>
+              <span >Movies only</span>
             </label>
             <label className="item3">
               <input
@@ -76,7 +76,7 @@ function Search(props) {
                 onChange={handleFilter}
                 checked={type === "series"}
               />
-              <span>Series only</span>
+              <span >Series only</span>
             </label>
           </div>
         </div>
